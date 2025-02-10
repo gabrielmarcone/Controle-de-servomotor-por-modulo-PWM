@@ -2,6 +2,7 @@
 #include "pico/stdlib.h"
 #include "hardware/pwm.h" // Biblioteca para controlar o hardware de PWM
 
+#define PWM_LED_BLUE 12 // Pino GPIO para o LED azul
 #define PWM_SERVO 22 // Pino GPIO para o controle do servomotor
 #define PWM_FREQUENCY 50 // Frequência do PWM (50Hz)
 #define CLOCK_FREQUENCY 125000000 // Frequência do clock base do RP2040 (125MHz)
@@ -18,17 +19,24 @@
 
 // Função para configurar o módulo PWM
 void pwm_setup() {
-    gpio_set_function(PWM_SERVO, GPIO_FUNC_PWM); // Habilitar GPIO como PWM
-    uint slice = pwm_gpio_to_slice_num(PWM_SERVO); // Obter slice do PWM
+    gpio_set_function(PWM_SERVO, GPIO_FUNC_PWM); // Habilitar GPIO 22 como PWM para o servomotor
+    gpio_set_function(PWM_LED_BLUE, GPIO_FUNC_PWM); 
+    uint slice_servo = pwm_gpio_to_slice_num(PWM_SERVO); // Obter slice do PWM da GPIO 22
+    uint slice_led = pwm_gpio_to_slice_num(PWM_LED_BLUE); // Obter slide do PWM da GPIO 12
 
-    pwm_set_clkdiv(slice, PWM_DIVISER); // Definir divisor de clock
-    pwm_set_wrap(slice, WRAP_VALUE); // Definir o valor de wrap
-    pwm_set_enabled(slice, true); // Habilitar PWM
+    pwm_set_clkdiv(slice_servo, PWM_DIVISER); // Definir divisor de clock
+    pwm_set_wrap(slice_servo, WRAP_VALUE); // Definir o valor de wrap
+    pwm_set_enabled(slice_servo, true); // Habilitar PWM
+
+    pwm_set_clkdiv(slice_led, PWM_DIVISER); // Definir divisor de clock para LED
+    pwm_set_wrap(slice_led, WRAP_VALUE); // Definir o valor de wrap para LED
+    pwm_set_enabled(slice_led, true); // Habilitar PWM para LED
 }
 
 // Função para definir o ângulo do servomotor
 void set_servo_angle(uint16_t pulse_width) {
     pwm_set_gpio_level(PWM_SERVO, pulse_width); // Define o nível de PWM
+    pwm_set_gpio_level(PWM_LED_BLUE, pulse_width*5); // Define o nível de PWM para o LED
     printf("Definindo PWM para %dus\n", pulse_width);
 }
 
