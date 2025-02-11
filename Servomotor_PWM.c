@@ -36,7 +36,7 @@ void pwm_setup() {
 // Função para definir o ângulo do servomotor
 void set_servo_angle(uint16_t pulse_width) {
     pwm_set_gpio_level(PWM_SERVO, pulse_width); // Define o nível de PWM
-    pwm_set_gpio_level(PWM_LED_BLUE, pulse_width*10); // Define o nível de PWM para o LED
+    pwm_set_gpio_level(PWM_LED_BLUE, pulse_width); // Define o nível de PWM para o LED
     printf("Definindo PWM para %dus\n", pulse_width);
 }
 
