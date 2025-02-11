@@ -66,7 +66,7 @@ Para validar o comportamento do sistema, foi realizado um experimento utilizando
 3. **Sincronização entre LED e servo**, onde o LED atingia o brilho máximo ao servo estar em 180° e o brilho mínimo ao servo estar em 0°.
 
 ## 📸 Demonstração do Projeto
-📹 **[Assista ao vídeo demonstrativo]()**  
+📹 **[Assista ao vídeo demonstrativo](https://drive.google.com/file/d/1yfxOpi2ARpixe9Zek_S0fhwNa1X59_H4)**  
 
 ## 📜 Licença
 Este projeto é de código aberto e pode ser usado livremente para fins educacionais e experimentação.
