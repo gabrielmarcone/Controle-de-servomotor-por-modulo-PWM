@@ -57,5 +57,20 @@ int main() {
     sleep_ms(5000);
 
     while (true) {
+         // Movimentação suave de 0° a 180° com LED acompanhando
+         for (uint16_t pos = SERVO_MIN; pos <= SERVO_MAX; pos += SERVO_STEP) {
+            set_servo_angle(pos);
+            sleep_ms(DELAY_MS);
+        }
+
+        sleep_ms(DELAY_MS);
+
+        // Movimentação suave de 180° a 0° com LED acompanhando
+        for (uint16_t pos = SERVO_MAX; pos >= SERVO_MIN; pos -= SERVO_STEP) {
+            set_servo_angle(pos);
+            sleep_ms(DELAY_MS);
+        }
+
+        sleep_ms(DELAY_MS);
     }
 }
