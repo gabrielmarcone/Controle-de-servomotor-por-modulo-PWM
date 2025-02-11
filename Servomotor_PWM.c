@@ -6,8 +6,8 @@
 #define PWM_SERVO 22 // Pino GPIO para o controle do servomotor
 #define PWM_FREQUENCY 50 // Frequência do PWM (50Hz)
 #define CLOCK_FREQUENCY 125000000 // Frequência do clock base do RP2040 (125MHz)
-#define PWM_DIVISER 64.0 // Divisor de clock para PWM
-#define WRAP_VALUE (CLOCK_FREQUENCY / (PWM_DIVISER * PWM_FREQUENCY)) // WRAP para 50Hz
+#define PWM_DIVISER 125.0 // Divisor de clock para PWM
+#define WRAP_VALUE 20000 // WRAP para 50Hz
 
 // Ciclos de trabalho correspondentes aos ângulos do servo
 #define SERVO_MIN (WRAP_VALUE * 0.025)  // 500 microsegundos -> 0 graus (2.5% duty cycle)
@@ -36,7 +36,7 @@ void pwm_setup() {
 // Função para definir o ângulo do servomotor
 void set_servo_angle(uint16_t pulse_width) {
     pwm_set_gpio_level(PWM_SERVO, pulse_width); // Define o nível de PWM
-    pwm_set_gpio_level(PWM_LED_BLUE, pulse_width*5); // Define o nível de PWM para o LED
+    pwm_set_gpio_level(PWM_LED_BLUE, pulse_width*10); // Define o nível de PWM para o LED
     printf("Definindo PWM para %dus\n", pulse_width);
 }
 
@@ -63,14 +63,10 @@ int main() {
             sleep_ms(DELAY_MS);
         }
 
-        sleep_ms(DELAY_MS);
-
         // Movimentação suave de 180° a 0° com LED acompanhando
         for (uint16_t pos = SERVO_MAX; pos >= SERVO_MIN; pos -= SERVO_STEP) {
             set_servo_angle(pos);
             sleep_ms(DELAY_MS);
         }
-
-        sleep_ms(DELAY_MS);
     }
 }
